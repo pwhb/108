@@ -5,27 +5,19 @@ import { formatDate, getBeadMap } from '$lib/utils';
 export const ssr = false;
 
 export const load: LayoutLoad = async ({ fetch }) => {
-	let deviceId = localStorage.getItem('deviceId');
-	if (!deviceId) {
-		deviceId = crypto.randomUUID();
-		localStorage.setItem('deviceId', deviceId);
+	const username = localStorage.getItem('username');
+	if (!username) {
+		throw redirect(302, '/init');
 	}
-
 	const userRes = await fetch('api/users/getUserInfo', {
 		method: 'POST',
-		body: JSON.stringify({ deviceId })
+		body: JSON.stringify({ username })
 	});
+
 	const userData = await userRes.json();
 	if (!userData.ok) {
 		throw redirect(302, '/init');
 	}
-
-	// const beadRes = await fetch('api/beads/getBeadsData', {
-	//     method: 'POST',
-	//     body: JSON.stringify({ userId: userData.data._id })
-	// });
-
-	// const beadData = await beadRes.json();
 
 	const beadRes = await fetch(
 		`api/beads?userId=${userData.data._id}&date=${formatDate(new Date())}`
@@ -36,7 +28,6 @@ export const load: LayoutLoad = async ({ fetch }) => {
 	const typesData = await typesRes.json();
 
 	return {
-		deviceId,
 		user: userData.data,
 		beads: beadData.data,
 		types: typesData.data

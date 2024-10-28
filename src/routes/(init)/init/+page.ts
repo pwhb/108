@@ -1,27 +1,24 @@
 import { redirect } from '@sveltejs/kit';
-import type { PageData } from './$types';
+import type { PageData, PageLoad } from './$types';
 
 export const ssr = false;
 
-export const load: PageData = async ({}) => {
-	let deviceId = localStorage.getItem('deviceId');
-	if (!deviceId) {
-		deviceId = crypto.randomUUID();
-		localStorage.setItem('deviceId', deviceId);
-	}
+export const load: PageLoad = async ({ fetch }) => {
+	const username = localStorage.getItem('username');
+	// if (!deviceId) {
+	// 	deviceId = crypto.randomUUID();
+	// 	localStorage.setItem('deviceId', deviceId);
+	// }
 
 	const userRes = await fetch('api/users/getUserInfo', {
 		method: 'POST',
-		body: JSON.stringify({ deviceId })
+		body: JSON.stringify({ username })
 	});
-	console.log(userRes);
 
 	const userData = await userRes.json();
 	if (userData.ok) {
 		throw redirect(302, '/');
 	}
 
-	return {
-		deviceId
-	};
+	return {};
 };
