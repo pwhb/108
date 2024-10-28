@@ -1,4 +1,6 @@
 export const DB_KEYS = {
-    USERS: "users",
-    BEADS: "beads",
+	DB_NAME: 'rosary108',
+	USERS: 'users',
+	BEADS: 'beads',
+	CONFIGS: 'configs'
 };
