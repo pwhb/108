@@ -5,6 +5,7 @@
 	let type = '';
 	let session: any = null;
 	let isGreen = false;
+	let isLoading = false;
 
 	if ($page.data.rosary.activeSession) {
 		session = $page.data.rosary.sessions[$page.data.rosary.activeSession];
@@ -33,6 +34,7 @@
 
 	async function onClick(e: Event) {
 		e.preventDefault();
+		isLoading = true;
 		if (session.at < session.count) {
 			const res = await fetch('api/rosary/updateSession', {
 				method: 'PATCH',
@@ -46,6 +48,7 @@
 			const data = await res.json();
 			session = data.data.sessions[data.data.activeSession];
 		}
+		isLoading = false;
 	}
 </script>
 
@@ -61,7 +64,13 @@
 				<p class="font-digit text-5xl">
 					{session.at}/{session.count}
 				</p>
-				<button class="btn btn-circle btn-neutral btn-lg" on:click={onClick}> +1 </button>
+				{#if isLoading}
+					<button class="btn btn-circle btn-neutral btn-lg" aria-label="loading" disabled>
+						<span class="loading loading-spinner"></span>
+					</button>
+				{:else}
+					<button class="btn btn-circle btn-neutral btn-lg" on:click={onClick}> +1 </button>
+				{/if}
 			{/if}
 		</div>
 	{:else}
