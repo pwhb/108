@@ -4,7 +4,7 @@
 
 @font-face {
 	font-family: 'digital';
-	src: url('fonts/DigitalNumbers-Regular.woff') format('woff');
+	src: url('/fonts/DigitalNumbers-Regular.woff') format('woff');
 }
 
 .font-digit {
