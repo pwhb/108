@@ -7,7 +7,7 @@ export const GET: RequestHandler = async ({ request }) => {
 		const url = new URL(request.url);
 		const query = Object.fromEntries(url.searchParams);
 		const client = await clientPromise;
-		const col = client.db(DB_KEYS.DB_NAME).collection(DB_KEYS.BEADS);
+		const col = client.db(DB_KEYS.DB_NAME).collection(DB_KEYS.ROSARY);
 		const data = await col.findOne({
 			userId: query.userId,
 			date: query.date

@@ -13,9 +13,9 @@ export const getLast7Days = (dateStr: string) => {
 	return dates;
 };
 
-export const getBeadMap = (beads: any[]) => {
+export const getBeadMap = (rosary: any[]) => {
 	const beadMap: any = {};
-	beads.forEach((bead) => {
+	rosary.forEach((bead) => {
 		beadMap[bead.date] = bead;
 	});
 	return beadMap;

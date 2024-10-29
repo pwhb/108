@@ -10,7 +10,7 @@ export const POST: RequestHandler = async ({ request }) => {
 		const last7Days = getLast7Days(date);
 
 		const client = await clientPromise;
-		const col = client.db(DB_KEYS.DB_NAME).collection(DB_KEYS.BEADS);
+		const col = client.db(DB_KEYS.DB_NAME).collection(DB_KEYS.ROSARY);
 		let data = await col
 			.find({
 				userId: body.userId,

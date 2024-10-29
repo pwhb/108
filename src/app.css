@@ -1,3 +1,12 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+
+@font-face {
+	font-family: 'digital';
+	src: url('fonts/DigitalNumbers-Regular.woff') format('woff');
+}
+
+.font-digit {
+	font-family: digital;
+}

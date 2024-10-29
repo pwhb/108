@@ -19,17 +19,12 @@ export const load: LayoutLoad = async ({ fetch }) => {
 		throw redirect(302, '/init');
 	}
 
-	const beadRes = await fetch(
-		`api/beads?userId=${userData.data._id}&date=${formatDate(new Date())}`
-	);
-	const beadData = await beadRes.json();
-
 	const typesRes = await fetch('api/configs/ROSARY_TYPES');
 	const typesData = await typesRes.json();
 
 	return {
-		user: userData.data,
-		beads: beadData.data,
+		user: userData.data.user,
+		rosary: userData.data.rosary,
 		types: typesData.data
 	};
 };
