@@ -56,22 +56,31 @@
 <div class="hero min-h-screen bg-base-200">
 	{#if session}
 		<div class="flex flex-col items-center gap-10">
-			{#if isGreen}
-				<p class="font-digit text-5xl text-green-400">
-					{session.at}/{session.count}
-				</p>
-			{:else}
-				<p class="font-digit text-5xl">
-					{session.at}/{session.count}
-				</p>
-				{#if isLoading}
-					<button class="btn btn-circle btn-neutral btn-lg" aria-label="loading" disabled>
-						<span class="loading loading-spinner"></span>
-					</button>
+			<div
+				class="radial-progress-primary radial-progress text-green-400"
+				style={`--value:${100 * (session.at / session.count)};--size:18rem;--thickness:${session.at === session.count ? '0.75rem' : '0.5rem'};--`}
+				role="progressbar"
+			>
+				{#if isGreen}
+					<p class="font-digit text-green-400">
+						<span class="text-5xl">
+							{session.at}
+						</span>
+						<span>/{session.count}</span>
+					</p>
 				{:else}
-					<button class="btn btn-circle btn-neutral btn-lg" on:click={onClick}> +1 </button>
+					<p class="font-digit">
+						{session.at}/{session.count}
+					</p>
+					{#if isLoading}
+						<button class="btn btn-circle btn-neutral btn-lg" aria-label="loading" disabled>
+							<span class="loading loading-spinner"></span>
+						</button>
+					{:else}
+						<button class="btn btn-circle btn-neutral btn-lg" on:click={onClick}> +1 </button>
+					{/if}
 				{/if}
-			{/if}
+			</div>
 		</div>
 	{:else}
 		<form on:submit={onSubmit} class="flex flex-col items-center gap-10">
