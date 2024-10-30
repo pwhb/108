@@ -56,31 +56,46 @@
 <div class="hero min-h-screen bg-base-200">
 	{#if session}
 		<div class="flex flex-col items-center gap-10">
-			<div
-				class="radial-progress-primary radial-progress text-green-400"
-				style={`--value:${100 * (session.at / session.count)};--size:18rem;--thickness:${session.at === session.count ? '0.75rem' : '0.5rem'};--`}
-				role="progressbar"
-			>
-				{#if isGreen}
-					<p class="font-digit text-green-400">
+			{#if isGreen}
+				<div
+					class="radial-progress-primary radial-progress text-green-400"
+					style={`--value:${100 * (session.at / session.count)};--size:18rem;--thickness:${session.at === session.count ? '0.75rem' : '0.5rem'};--`}
+					role="progressbar"
+				>
+					<p class="font-digit">
 						<span class="text-5xl">
 							{session.at}
 						</span>
 						<span>/{session.count}</span>
 					</p>
-				{:else}
-					<p class="font-digit">
-						{session.at}/{session.count}
-					</p>
+				</div>
+			{:else}
+				<button on:click={onClick}>
 					{#if isLoading}
-						<button class="btn btn-circle btn-neutral btn-lg" aria-label="loading" disabled>
-							<span class="loading loading-spinner"></span>
-						</button>
+						<span class="loading loading-spinner"></span>
 					{:else}
-						<button class="btn btn-circle btn-neutral btn-lg" on:click={onClick}> +1 </button>
+						<div
+							class="radial-progress-primary radial-progress"
+							style={`--value:${100 * (session.at / session.count)};--size:18rem;--thickness:${session.at === session.count ? '0.75rem' : '0.5rem'};--`}
+							role="progressbar"
+						>
+							<p class="font-digit text-content">
+								<span class="text-5xl">
+									{session.at}
+								</span>
+								<span>/{session.count}</span>
+							</p>
+						</div>
 					{/if}
-				{/if}
-			</div>
+				</button>
+				<!-- {#if isLoading}
+				<button class="btn btn-circle btn-neutral btn-lg" aria-label="loading" disabled>
+					<span class="loading loading-spinner"></span>
+				</button>
+			{:else}
+				<button class="btn btn-circle btn-neutral btn-lg" on:click={onClick}> +1 </button>
+			{/if} -->
+			{/if}
 		</div>
 	{:else}
 		<form on:submit={onSubmit} class="flex flex-col items-center gap-10">
